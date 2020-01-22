@@ -40,18 +40,20 @@ namespace NumbersExtensions
                 return numberIn;
             }
 
+            int mask = int.MaxValue;
+
             if (leftIndex == MaxValueOfIndex)
             {
-                numberSource &= int.MaxValue;
+                numberSource &= mask;
             }
 
             int numberSourceCopy = numberSource;
             numberSource >>= leftIndex + 1;
             numberSource <<= leftIndex + 1;
-            int multiplierForZeroingLeftPart = (int)(Math.Pow(2, rightIndex) - 1);
+            int multiplierForZeroingLeftPart = mask >> (31 - rightIndex);
             numberSourceCopy &= multiplierForZeroingLeftPart;
             numberSource |= numberSourceCopy;
-            multiplierForZeroingLeftPart = (int)(Math.Pow(2, leftIndex - rightIndex + 1) - 1);
+            multiplierForZeroingLeftPart = mask >> (31 - (leftIndex - rightIndex + 1));
             numberIn &= multiplierForZeroingLeftPart;
             numberIn <<= rightIndex;
             return numberSource | numberIn;
