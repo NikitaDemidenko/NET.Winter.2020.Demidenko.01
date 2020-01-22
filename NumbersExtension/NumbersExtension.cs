@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Text;
 
 namespace NumbersExtensions
 {
@@ -16,8 +15,8 @@ namespace NumbersExtensions
         /// <param name="rightIndex">Right position.</param>
         /// <param name="leftIndex">Left position.</param>
         /// <returns>Returns new number.</returns>
-        /// <exception cref="ArgumentException">Thrown when right index is greater than left index.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when right index or left index are out of range.</exception>
+        /// <exception cref="ArgumentException">Thrown when rightIndex index is greater than leftIndex index.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when rightIndex index or leftIndex index are out of range.</exception>
         public static int InsertNumberIntoAnother(int numberSource, int numberIn, int rightIndex, int leftIndex)
         {
             if (rightIndex > leftIndex)
@@ -71,28 +70,17 @@ namespace NumbersExtensions
                 throw new ArgumentOutOfRangeException(nameof(number));
             }
 
-            var numberString = new StringBuilder(number.ToString(CultureInfo.InvariantCulture));
+            string numberString = Convert.ToString(number, CultureInfo.InvariantCulture);
             int firstDigitIndex = 0;
             int lastDigitIndex = numberString.Length - 1;
-            if (numberString[firstDigitIndex] == numberString[lastDigitIndex])
-            {
-                if (lastDigitIndex <= 1)
-                {
-                    return true;
-                }
+            return IsPalindromeString(numberString, firstDigitIndex, lastDigitIndex);
+        }
 
-                numberString.Remove(lastDigitIndex, 1);
-                numberString.Remove(firstDigitIndex, 1);
-                if (numberString[firstDigitIndex] == '0' && numberString[lastDigitIndex - 2] == '0')
-                {
-                    numberString[firstDigitIndex] = '1';
-                    numberString[lastDigitIndex - 2] = '1';
-                }
-
-                return IsPalindrome(int.Parse(numberString.ToString(), CultureInfo.InvariantCulture));
-            }
-
-            return false;
+        private static bool IsPalindromeString(string numberString, int leftIndex, int rightIndex)
+        {
+            return leftIndex >= rightIndex ?
+                true : numberString[leftIndex] != numberString[rightIndex] ?
+                    false : IsPalindromeString(numberString, leftIndex + 1, rightIndex - 1);
         }
     }
 }
