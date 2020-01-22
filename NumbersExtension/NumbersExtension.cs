@@ -61,9 +61,15 @@ namespace NumbersExtensions
         /// <param name="number">Number.</param>
         /// <returns>
         ///   <c>true</c> if the specified number is palindrome; otherwise, <c>false</c>.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when number is less than zero.</exception>
         public static bool IsPalindrome(int number)
         {
-            var numberString = new StringBuilder(Math.Abs(number).ToString(CultureInfo.InvariantCulture));
+            if (number < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(number));
+            }
+
+            var numberString = new StringBuilder(number.ToString(CultureInfo.InvariantCulture));
             int firstDigitIndex = 0;
             int lastDigitIndex = numberString.Length - 1;
             if (numberString[firstDigitIndex] == numberString[lastDigitIndex])
@@ -75,6 +81,12 @@ namespace NumbersExtensions
 
                 numberString.Remove(lastDigitIndex, 1);
                 numberString.Remove(firstDigitIndex, 1);
+                if (numberString[firstDigitIndex] == '0' && numberString[lastDigitIndex - 2] == '0')
+                {
+                    numberString[firstDigitIndex] = '1';
+                    numberString[lastDigitIndex - 2] = '1';
+                }
+
                 return IsPalindrome(int.Parse(numberString.ToString(), CultureInfo.InvariantCulture));
             }
 
