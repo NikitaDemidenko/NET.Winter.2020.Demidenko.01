@@ -44,5 +44,38 @@ namespace NumbersExtension.MSTests
 
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void IsPalindrome_NumberIs77777_ReturnedTrue()
+        {
+            int number = 77777;
+            bool expected = true;
+
+            bool actual = IsPalindrome(number);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void IsPalindrome_NumberIs34344343_ReturnedTrue()
+        {
+            int number = 34344343;
+            bool expected = true;
+
+            bool actual = IsPalindrome(number);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void IsPalindrome_NumberIs1232221_ReturnedFalse()
+        {
+            int number = 1232221;
+            bool expected = false;
+
+            bool actual = IsPalindrome(number);
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

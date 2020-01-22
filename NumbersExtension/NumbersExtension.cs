@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Text;
 
 namespace NumbersExtensions
 {
@@ -53,6 +55,30 @@ namespace NumbersExtensions
             numberIn &= multiplierForZeroingLeftPart;
             numberIn <<= rightIndex;
             return numberSource | numberIn;
+        }
+
+        /// <summary>Determines whether the specified number is palindrome.</summary>
+        /// <param name="number">Number.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified number is palindrome; otherwise, <c>false</c>.</returns>
+        public static bool IsPalindrome(int number)
+        {
+            var numberString = new StringBuilder(Math.Abs(number).ToString(CultureInfo.InvariantCulture));
+            int firstDigitIndex = 0;
+            int lastDigitIndex = numberString.Length - 1;
+            if (numberString[firstDigitIndex] == numberString[lastDigitIndex])
+            {
+                if (lastDigitIndex <= 1)
+                {
+                    return true;
+                }
+
+                numberString.Remove(lastDigitIndex, 1);
+                numberString.Remove(firstDigitIndex, 1);
+                return IsPalindrome(int.Parse(numberString.ToString(), CultureInfo.InvariantCulture));
+            }
+
+            return false;
         }
     }
 }

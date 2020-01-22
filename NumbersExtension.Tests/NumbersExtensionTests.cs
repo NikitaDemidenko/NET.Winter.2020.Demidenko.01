@@ -28,5 +28,15 @@ namespace NumbersExtensions.Tests
         [Test]
         public void InsertNumberIntoAnother_I_Or_J_OutOfRange_ThrowArgumentOutOfRangeException() =>
             Assert.Throws<ArgumentOutOfRangeException>(() => InsertNumberIntoAnother(12, 2, 0, 32));
+
+        [TestCase(123021, ExpectedResult = false)]
+        [TestCase(345543, ExpectedResult = true)]
+        [TestCase(1615201561, ExpectedResult = false)]
+        [TestCase(int.MaxValue, ExpectedResult = false)]
+        [TestCase(0, ExpectedResult = true)]
+        [TestCase(33333333, ExpectedResult = true)]
+        [TestCase(-123321, ExpectedResult = true)]
+        [TestCase(-333345333, ExpectedResult = false)]
+        public bool IsPalindromeTests(int number) => IsPalindrome(number);
     }
 }
