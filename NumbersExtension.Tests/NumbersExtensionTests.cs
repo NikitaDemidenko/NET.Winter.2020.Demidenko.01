@@ -41,5 +41,27 @@ namespace NumbersExtensions.Tests
         [TestCase(33333333, ExpectedResult = true)]
         [TestCase(909909, ExpectedResult = true)]
         public bool IsPalindromeTests(int number) => IsPalindrome(number);
+
+        [Test]
+        [Order(2)]
+        [Timeout(500)]
+        public void PossiblyVerySlowCode_WithTimeLessThan1000Milliseconds()
+        {
+            for (int source = 0; source < 1_000_000; source++)
+            {
+                IsPalindrome(source);
+            }
+        }
+
+        [Test]
+        [Order(1)]
+        [Timeout(2_000)]
+        public void PossiblyVerySlowCode_WithTimeLessThan25000Milliseconds()
+        {
+            for (int source = 0; source < 10_000_000; source++)
+            {
+                IsPalindrome(source);
+            }
+        }
     }
 }
